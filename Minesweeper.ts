@@ -2,69 +2,90 @@ import Cell = require('./Cell');
 import Minefield = require('./Minefield');
 
 /**
- * An abstract class for one game instance of minesweeper
+ * An "abstract" class for one game instance of minesweeper
  */
 class Minesweeper {
-	protected field: Minefield;
-	protected rows: number;
-	protected cols: number;
-	protected cellCount: number;
-	protected bombCount: number;
-	protected observers: MSObserver[];
+    protected field: Minefield;
+    protected rows: number;
+    protected cols: number;
+    protected cellCount: number;
+    protected bombCount: number;
+    protected observers: MSObserver[];
 
-	constructor() {
-		this.field = this.getField();
-		this.observers = [];
-	}
-	
-	play(): void {
-		this.observers.forEach(observer => {
-			observer.onGameStart();
-			observer.onWaitingInput();
-		});
-	}
-	
-	addObserver(observer: MSObserver): void {
-		this.observers.push(observer);
-	}
-	
-	getCellAt(row: number, col: number): Cell {
-		if (!this.field.isValidCell(row, col)) {
-			throw "Invalid row or column value";
-		}
-		
-		return this.field.getCellAt(row, col);
-	}
-	
-	protected getField(): Minefield {
+    constructor() {
+        this.field = this.getField();
+        this.observers = [];
+    }
+
+    play(): void {
+        this.observers.forEach(observer => {
+            observer.onGameStart();
+            observer.onWaitingInput();
+        });
+    }
+
+    addObserver(observer: MSObserver): void {
+        this.observers.push(observer);
+    }
+
+    getCellAt(row: number, col: number): Cell {
+        if (!this.field.isValidCell(row, col)) {
+            throw "Invalid row or column value";
+        }
+
+        return this.field.getCellAt(row, col);
+    }
+
+    isValidMove(row: number, col: number): boolean {
+        if (!this.field.isValidCell) {
+            return false;
+        }
+
+        return !this.field.getCellAt(row, col).open;
+    }
+
+    makeMove(row: number, col: number): void {
+        this.field.makeMove(row, col);
+
+        this.observers.forEach(observer => {
+            if (this.field.steppedOnBomb) {
+                observer.onBombStepped(row, col);
+            } else {
+                observer.onFieldChanged();
+                observer.onWaitingInput();
+            }
+        });
+    }
+
+    protected getField(): Minefield {
         throw "getField not implemented!";
     }
 	
 	/**
 	 * Gets a cell without a bomb in it. Will not terminate if no such cell exists
 	 */
-	protected getRandomCellWithoutBomb(cells: Cell[][]): Cell {
-		do {
-			var cell = this.getRandomCell(cells);
-		} while (cell.bomb);
+    protected getRandomCellWithoutBomb(cells: Cell[][]): Cell {
+        do {
+            var cell = this.getRandomCell(cells);
+        } while (cell.bomb);
 
-		return cell;
-	}
+        return cell;
+    }
 	
 	/**
 	 * Will not terminate if no valid cell exists
 	 */
-	protected getRandomCell(cells: Cell[][]): Cell {
-		do {
-			// choose between [0, rows) and [0, cols)
-			var row = Math.floor(Math.random() * (this.rows));
-			var col = Math.floor(Math.random() * (this.cols));
-			
-			var cell = cells[row][col];
-		} while (!cell);
-		
-		return cell;
-	}
+    protected getRandomCell(cells: Cell[][]): Cell {
+        do {
+            // choose between [0, rows) and [0, cols)
+            var row = Math.floor(Math.random() * (this.rows));
+            var col = Math.floor(Math.random() * (this.cols));
+
+            var cell = cells[row][col];
+        } while (!cell);
+
+        return cell;
+    }
 }
 
 export = Minesweeper;

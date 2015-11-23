@@ -9,7 +9,7 @@ import RectMinesweeper = require('./RectMinesweeper');
  * Supports one board size up to 36x36
  */
 class TextMinesweeper implements MSObserver {
-	private indices = '123456789abcdefghijklmnopqrstuvwxyz';
+    private indices = '123456789abcdefghijklmnopqrstuvwxyz';
     private ms: Minesweeper;
     private rows: number;
     private cols: number;
@@ -42,8 +42,8 @@ class TextMinesweeper implements MSObserver {
     }
 
     onVictory() {
-		console.log('Congrats! You win!');
-	}
+        console.log('Congrats! You win!');
+    }
 
     private getUserInput(): void {
         input('Please enter a move (e.g. "1,2" for row 1, col 2): ', (moveStr: string) => {

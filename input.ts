@@ -5,6 +5,6 @@ var rl = readline.createInterface({
     output:  process.stdout
 });
 
-module.exports = function(question: string, callback: (input: string) => void) {
+export = function(question: string, callback: (input: string) => void) {
 	rl.question(question, callback);
 };

@@ -1,9 +1,8 @@
-/// <reference path="Cell.ts" />
-/// <reference path="MSObserver.ts" />
-/// <reference path="Minesweeper.ts" />
-/// <reference path="RectMineSweeper.ts" />
-
 import input = require('./input');
+import Cell = require('./Cell');
+import Minefield = require('./Minefield');
+import Minesweeper = require('./Minesweeper');
+import RectMinesweeper = require('./RectMinesweeper');
 
 /**
  * Allows you to play multiple games of regular Minesweeper in console.
@@ -80,4 +79,4 @@ class TextMinesweeper implements MSObserver {
 	}
 }
 
-module.exports = TextMinesweeper;
+new TextMinesweeper();

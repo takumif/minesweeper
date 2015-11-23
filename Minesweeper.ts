@@ -1,6 +1,10 @@
-/// <reference path="Minefield.ts" />
+import Cell = require('./Cell');
+import Minefield = require('./Minefield');
 
-abstract class Minesweeper {
+/**
+ * An abstract class for one game instance of minesweeper
+ */
+class Minesweeper {
 	protected field: Minefield;
 	protected rows: number;
 	protected cols: number;
@@ -31,7 +35,9 @@ abstract class Minesweeper {
 		return this.field.getCellAt(row, col);
 	}
 	
-	protected abstract getField();
+	protected getField(): Minefield {
+        throw "getField not implemented!";
+    }
 	
 	/**
 	 * Gets a cell without a bomb in it. Will not terminate if no such cell exists
@@ -59,3 +65,5 @@ abstract class Minesweeper {
 		return cell;
 	}
 }
+
+export = Minesweeper;

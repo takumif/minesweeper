@@ -8,3 +8,5 @@ class Cell {
         this.bomb = bomb;
     }
 }
+
+export = Cell;

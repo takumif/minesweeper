@@ -1,10 +1,18 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "ES5"
+		"target": "ES5",
+		"sourceMap": true
 	},
 	"files": [
+		"Cell.ts",
+		"input.ts",
+		"Minefield.ts",
+		"Minesweeper.ts",
+		"MSObserver.ts",
 		"PngParser.ts",
+		"RectMinesweeper.ts",
+		"TextMinesweeper.ts",
 		"typings/tsd.d.ts"
 	]
 }

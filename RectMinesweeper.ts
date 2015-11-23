@@ -1,4 +1,6 @@
-/// <reference path="Minesweeper.ts" />
+import Cell = require('./Cell');
+import Minefield = require('./Minefield');
+import Minesweeper = require('./Minesweeper');
 
 /**
  * One game run of rectangular minesweeper
@@ -35,3 +37,5 @@ class RectMinesweeper extends Minesweeper {
 		return new Minefield(cells);
 	}
 }
+
+export = RectMinesweeper;

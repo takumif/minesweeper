@@ -1,4 +1,4 @@
-/// <reference path="Cell.ts" />
+import Cell = require('./Cell');
 
 class Minefield {
     steppedOnBomb: boolean;
@@ -72,3 +72,5 @@ class Minefield {
         }
     }
 }
+
+export = Minefield;

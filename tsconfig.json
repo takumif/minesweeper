@@ -1,8 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "ES5",
-		"sourceMap": true
+		"target": "ES5"
 	},
 	"files": [
 		"Cell.ts",

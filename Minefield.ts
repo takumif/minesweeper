@@ -48,6 +48,14 @@ class Minefield {
         this.recursivelyOpen(this.cells[row][col]);
     }
     
+    getCellAt(row: number, col: number): Cell {
+		if (!this.isValidCell(row, col)) {
+			throw "Invalid row or column value";
+		}
+		
+        return this.cells[row][col];
+    }
+    
     private recursivelyOpen(cell: Cell): void {
         cell.open = true;
         

@@ -20,8 +20,10 @@ class TextMinesweeper implements MSObserver {
 		this.cols = 8;
 		this.bombCount = 8;
 		
+		console.log('gonna instantiate Rect');
 		this.ms = new RectMinesweeper(this.rows, this.cols, this.bombCount);
 		this.ms.addObserver(this);
+		console.log("gonna play");
 		this.ms.play();
 	}
 	
@@ -79,4 +81,4 @@ class TextMinesweeper implements MSObserver {
 	}
 }
 
-// new TextMinesweeper();
+new TextMinesweeper();

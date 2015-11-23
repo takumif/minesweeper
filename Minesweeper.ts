@@ -14,6 +14,7 @@ class Minesweeper {
 
 	constructor() {
 		this.field = this.getField();
+		this.observers = [];
 	}
 	
 	play(): void {
@@ -45,7 +46,7 @@ class Minesweeper {
 	protected getRandomCellWithoutBomb(cells: Cell[][]): Cell {
 		do {
 			var cell = this.getRandomCell(cells);
-		} while (!cell.bomb);
+		} while (cell.bomb);
 
 		return cell;
 	}

@@ -44,7 +44,7 @@ class Minesweeper {
 	 */
 	protected getRandomCellWithoutBomb(cells: Cell[][]): Cell {
 		do {
-			var cell = this.getRandomCell(cell);
+			var cell = this.getRandomCell(cells);
 		} while (!cell.bomb);
 
 		return cell;

@@ -2,14 +2,33 @@
 
 abstract class Minesweeper {
 	protected field: Minefield;
-	protected rows = 8;
-	protected cols = 8;
-	protected cellCount = 64;
-	protected bombCount = 10;
+	protected rows: number;
+	protected cols: number;
+	protected cellCount: number;
+	protected bombCount: number;
 	protected observers: MSObserver[];
 
 	constructor() {
 		this.field = this.getField();
+	}
+	
+	play(): void {
+		this.observers.forEach(observer => {
+			observer.onGameStart();
+			observer.onWaitingInput();
+		});
+	}
+	
+	addObserver(observer: MSObserver): void {
+		this.observers.push(observer);
+	}
+	
+	getCellAt(row: number, col: number): Cell {
+		if (!this.field.isValidCell(row, col)) {
+			throw "Invalid row or column value";
+		}
+		
+		return this.field.getCellAt(row, col);
 	}
 	
 	protected abstract getField();
@@ -38,9 +57,5 @@ abstract class Minesweeper {
 		} while (!cell);
 		
 		return cell;
-	}
-	
-	public addObserver(observer: MSObserver): void {
-		this.observers.push(observer);
 	}
 }

@@ -3,6 +3,8 @@
 /// <reference path="Minesweeper.ts" />
 /// <reference path="RectMineSweeper.ts" />
 
+import input = require('./input');
+
 /**
  * Allows you to play multiple games of regular Minesweeper in console.
  * Supports one board size up to 36x36
@@ -18,8 +20,32 @@ class TextMinesweeper implements MSObserver {
 		this.rows = 8;
 		this.cols = 8;
 		this.bombCount = 8;
+		
 		this.ms = new RectMinesweeper(this.rows, this.cols, this.bombCount);
+		this.ms.addObserver(this);
 		this.ms.play();
+	}
+	
+	onGameStart() {
+		this.printBoard();
+	}
+	
+	onWaitingInput() {
+		input('Please enter a move (e.g. "1,2" for row 1, col 2): ', (move: string) => {
+			console.log('Move is:' + move);
+		});
+	}
+	
+	onFieldChanged() {
+		
+	}
+	
+	onBombStepped(row: number, col: number) {
+		
+	}
+	
+	onVictory() {
+		
 	}
 	
 	private printBoard(): void {

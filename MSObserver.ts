@@ -1,6 +1,7 @@
 interface MSObserver {
 	onGameStart();
+	onWaitingInput();
 	onFieldChanged();
-	onBombStepped();
+	onBombStepped(row: number, col: number);
 	onVictory();
 }

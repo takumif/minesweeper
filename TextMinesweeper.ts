@@ -1,4 +1,4 @@
-import input = require('./input');
+import input = require('./Input');
 import Cell = require('./Cell');
 import Minefield = require('./Minefield');
 import Minesweeper = require('./Minesweeper');
@@ -79,4 +79,4 @@ class TextMinesweeper implements MSObserver {
 	}
 }
 
-new TextMinesweeper();
+// new TextMinesweeper();

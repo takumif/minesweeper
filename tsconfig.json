@@ -5,7 +5,7 @@
 	},
 	"files": [
 		"Cell.ts",
-		"input.ts",
+		"Input.ts",
 		"Minefield.ts",
 		"Minesweeper.ts",
 		"MSObserver.ts",

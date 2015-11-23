@@ -4,7 +4,13 @@
  * One game run of rectangular minesweeper
  */
 class RectMinesweeper extends Minesweeper {
-	constructor() {
+	
+	constructor(rows: number, cols: number, bombCount: number) {
+		this.rows = rows;
+		this.cols = cols;
+		this.cellCount = rows * cols;
+		this.bombCount = bombCount;
+		
 		super();
 	}
 	

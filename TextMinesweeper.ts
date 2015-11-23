@@ -42,7 +42,7 @@ class TextMinesweeper implements MSObserver {
     }
 
     onVictory() {
-		
+		console.log('Congrats! You win!');
 	}
 
     private getUserInput(): void {

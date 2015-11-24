@@ -48,7 +48,7 @@ class Minefield {
         if (!this.isValidCell(row, col)) {
             throw "Stepped on an invalid cell";
         }
-        
+
         if (this.cells[row][col].bomb) {
             this.steppedOnBomb = true;
         }
@@ -78,10 +78,10 @@ class Minefield {
                     for (var dc = -1; dc <= 1; dc++) {
                         if (this.isValidCell(row + dr, col + dc)) {
                             var adjCell = this.cells[row + dr][col + dc];
-                            
+
                             if (cell != adjCell) {
                                 cell.adjCells.push(adjCell);
-                                
+
                                 if (adjCell.bomb) {
                                     cell.adjBombCount++;
                                 }
@@ -105,9 +105,9 @@ class Minefield {
         }
     }
 	
-	/**
-	 * Gets a cell without a bomb in it. Will not terminate if no such cell exists
-	 */
+    /**
+     * Gets a cell without a bomb in it. Will not terminate if no such cell exists
+     */
     getRandomCellWithoutBomb(): Cell {
         do {
             var cell = this.getRandomCell();
@@ -116,9 +116,9 @@ class Minefield {
         return cell;
     }
 	
-	/**
-	 * Will not terminate if no valid cell exists
-	 */
+    /**
+     * Will not terminate if no valid cell exists
+     */
     private getRandomCell(): Cell {
         do {
             // choose between [0, rows) and [0, cols)
@@ -136,7 +136,7 @@ class Minefield {
      */
     private getCellCount(): number {
         var count = 0;
-        
+
         for (var row = 0; row < this.rows; row++) {
             for (var col = 0; col < this.cols; col++) {
                 if (this.cells[row][col]) {

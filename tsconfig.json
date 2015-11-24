@@ -5,12 +5,14 @@
 	},
 	"files": [
 		"Cell.ts",
+        "ColorCell.ts",
 		"Input.ts",
 		"Minefield.ts",
 		"Minesweeper.ts",
 		"MSObserver.ts",
 		"PngParser.ts",
 		"RectMinesweeper.ts",
+        "ImageMinesweeper.ts",
 		"TextMinesweeper.ts",
 		"typings/tsd.d.ts"
 	]

@@ -8,9 +8,9 @@ class Minesweeper {
     protected field: Minefield;
     protected rows: number;
     protected cols: number;
-    protected cellCount: number;
     protected bombCount: number;
     protected observers: MSObserver[];
+    protected moveMade = false;
 
     constructor() {
         this.field = this.getField();
@@ -45,6 +45,12 @@ class Minesweeper {
     }
 
     makeMove(row: number, col: number): void {
+        if (!this.moveMade) {
+            // first move, so place bombs
+            this.placeBombsExceptFor(row, col);
+            this.moveMade = true;
+        }
+        
         this.field.makeMove(row, col);
 
         this.observers.forEach(observer => {
@@ -60,31 +66,21 @@ class Minesweeper {
     protected getField(): Minefield {
         throw "getField not implemented!";
     }
-	
-	/**
-	 * Gets a cell without a bomb in it. Will not terminate if no such cell exists
-	 */
-    protected getRandomCellWithoutBomb(cells: Cell[][]): Cell {
-        do {
-            var cell = this.getRandomCell(cells);
-        } while (cell.bomb);
-
-        return cell;
-    }
-	
-	/**
-	 * Will not terminate if no valid cell exists
-	 */
-    protected getRandomCell(cells: Cell[][]): Cell {
-        do {
-            // choose between [0, rows) and [0, cols)
-            var row = Math.floor(Math.random() * (this.rows));
-            var col = Math.floor(Math.random() * (this.cols));
-
-            var cell = cells[row][col];
-        } while (!cell);
-
-        return cell;
+    
+    private placeBombsExceptFor(row: number, col: number): void {
+        if (this.bombCount >= this.field.cellCount) {
+            throw 'Too many bombs!';
+        }
+        
+        var count = 0;
+        while (count < this.bombCount) {
+            var cell = this.field.getRandomCellWithoutBomb();
+            if (cell != this.field.getCellAt(row, col) && !cell.bomb) {
+                cell.bomb = true;
+                count++;
+            }
+        }
+        this.field.updateCellAdjacency();
     }
 }
 

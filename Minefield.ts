@@ -3,6 +3,7 @@ import Cell = require('./Cell');
 class Minefield {
     steppedOnBomb: boolean;
     openCellCount: number;
+    cellCount: number;
     private cells: Cell[][];
     private rows: number;
     private cols: number;
@@ -15,6 +16,7 @@ class Minefield {
         this.cells = cells;
         this.rows = cells.length;
         this.cols = cells[0].length;
+        this.cellCount = this.getCellCount();
 
         this.init();
     }
@@ -46,6 +48,10 @@ class Minefield {
         if (!this.isValidCell(row, col)) {
             throw "Stepped on an invalid cell";
         }
+        
+        if (this.cells[row][col].bomb) {
+            this.steppedOnBomb = true;
+        }
 
         this.recursivelyOpen(this.cells[row][col]);
     }
@@ -61,7 +67,7 @@ class Minefield {
     /**
      * Updates the adjCells property for each cell
      */
-    protected updateCellAdjacency(): void {
+    updateCellAdjacency(): void {
         for (var row = 0; row < this.rows; row++) {
             for (var col = 0; col < this.cols; col++) {
                 var cell = this.cells[row][col];
@@ -72,10 +78,13 @@ class Minefield {
                     for (var dc = -1; dc <= 1; dc++) {
                         if (this.isValidCell(row + dr, col + dc)) {
                             var adjCell = this.cells[row + dr][col + dc];
-                            cell.adjCells.push(adjCell);
                             
-                            if (adjCell.bomb) {
-                                cell.adjBombCount++;
+                            if (cell != adjCell) {
+                                cell.adjCells.push(adjCell);
+                                
+                                if (adjCell.bomb) {
+                                    cell.adjBombCount++;
+                                }
                             }
                         }
                     }
@@ -87,10 +96,6 @@ class Minefield {
     private recursivelyOpen(cell: Cell): void {
         cell.open = true;
 
-        if (cell.bomb) {
-            this.steppedOnBomb = true;
-        }
-
         if (cell.adjBombCount == 0) {
             cell.adjCells.forEach(adjCell => {
                 if (!adjCell.open) {
@@ -98,6 +103,48 @@ class Minefield {
                 }
             });
         }
+    }
+	
+	/**
+	 * Gets a cell without a bomb in it. Will not terminate if no such cell exists
+	 */
+    getRandomCellWithoutBomb(): Cell {
+        do {
+            var cell = this.getRandomCell();
+        } while (cell.bomb);
+
+        return cell;
+    }
+	
+	/**
+	 * Will not terminate if no valid cell exists
+	 */
+    private getRandomCell(): Cell {
+        do {
+            // choose between [0, rows) and [0, cols)
+            var row = Math.floor(Math.random() * (this.rows));
+            var col = Math.floor(Math.random() * (this.cols));
+
+            var cell = this.cells[row][col];
+        } while (!cell);
+
+        return cell;
+    }
+    
+    /**
+     * Requires that this.rows and this.cols are valid
+     */
+    private getCellCount(): number {
+        var count = 0;
+        
+        for (var row = 0; row < this.rows; row++) {
+            for (var col = 0; col < this.cols; col++) {
+                if (this.cells[row][col]) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
 

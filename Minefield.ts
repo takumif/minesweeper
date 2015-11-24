@@ -58,9 +58,9 @@ class Minefield {
         return this.cells[row][col];
     }
 	
-	/**
-	 * Updates the adjCells property for each cell
-	 */
+    /**
+     * Updates the adjCells property for each cell
+     */
     protected updateCellAdjacency(): void {
         for (var row = 0; row < this.rows; row++) {
             for (var col = 0; col < this.cols; col++) {
